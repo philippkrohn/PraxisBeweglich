@@ -69,17 +69,22 @@
         .modal-content {
             transition: transform 0.3s ease-in-out;
         }
+
+        /* Text Shadow für bessere Lesbarkeit auf Bildern */
+        .text-shadow {
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body class="leading-relaxed">
 
     <!-- HERO SECTION -->
     <section class="relative text-white min-h-[70vh] md:min-h-[80vh] flex items-center">
-        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
         <img src="header_beweglich.jpg" alt="Team der Praxis Beweglich in Aktion" class="absolute inset-0 w-full h-full object-cover">
         <div class="relative container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Deine neue Physio-Heimat.</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">Wo Wertschätzung, flexible Arbeitszeiten und ein echtes Team zu Hause sind.</p>
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4 text-shadow">Deine neue Physio-Heimat.</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow">Wo Wertschätzung, flexible Arbeitszeiten und ein echtes Team zu Hause sind.</p>
             <a href="#application-start" class="mt-8 inline-block bg-primary-turquoise text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:bg-teal-600 transition-colors duration-300">
                 Jetzt in 60 Sekunden bewerben
             </a>
@@ -204,37 +209,37 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Option 1: WhatsApp -->
                 <div class="flex flex-col border-2 border-gray-200 p-8 rounded-lg text-center hover:shadow-lg transition-shadow">
-                    <i class="fab fa-whatsapp text-6xl text-green-500 mb-4"></i>
+                    <div class="flex justify-center mb-4"><i class="fab fa-whatsapp text-6xl text-green-500"></i></div>
                     <h3 class="text-2xl font-bold text-primary-dark-green mb-2">Der schnelle Weg</h3>
                     <p class="text-gray-700 flex-grow mb-6">Schreib uns einfach per WhatsApp. Kein Anschreiben, kein Stress.</p>
-                    <a href="https://wa.me/4915752065959?text=Hallo%20Praxis%20Beweglich,%20ich%20interessiere%20mich%20f%C3%BCr%20die%20Stelle%20als%20Physiotherapeut:in." target="_blank" class="mt-auto w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300">
+                    <a href="https://wa.me/4915752065959?text=Hallo%20Praxis%20Beweglich,%20ich%20interessiere%20mich%20f%C3%BCr%20die%20Stelle%20als%20Physiotherapeut:in." target="_blank" class="mt-auto w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300 text-center">
                         Jetzt per WhatsApp starten
                     </a>
                 </div>
                 <!-- Option 2: Klassisch -->
                 <div class="flex flex-col border-2 border-primary-turquoise p-8 rounded-lg text-center bg-primary-dark-green text-white shadow-2xl transform md:scale-105">
-                    <i class="fas fa-paper-plane text-6xl text-primary-turquoise mb-4"></i>
+                    <div class="flex justify-center mb-4"><i class="fas fa-paper-plane text-6xl text-primary-turquoise"></i></div>
                     <h3 class="text-2xl font-bold mb-2">Der klassische Weg</h3>
                     <p class="flex-grow mb-6">Fülle unser kurzes Kontaktformular aus. Wir melden uns dann umgehend bei dir.</p>
-                    <button onclick="openFormModal('Bewerbung')" class="mt-auto w-full bg-primary-turquoise text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-600 transition-colors duration-300">
+                    <button onclick="openFormModal('Bewerbung')" class="mt-auto w-full bg-primary-turquoise text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-600 transition-colors duration-300 text-center">
                         Kurzbewerbung starten
                     </button>
                 </div>
                 <!-- Option 3: Persönlich -->
                 <div class="flex flex-col border-2 border-gray-200 p-8 rounded-lg text-center hover:shadow-lg transition-shadow">
-                    <i class="fas fa-phone-volume text-6xl text-blue-500 mb-4"></i>
+                    <div class="flex justify-center mb-4"><i class="fas fa-phone-volume text-6xl text-blue-500"></i></div>
                     <h3 class="text-2xl font-bold text-primary-dark-green mb-2">Der persönliche Weg</h3>
                     <p class="text-gray-700 flex-grow mb-6">Bitte um einen Rückruf für ein unverbindliches 15-Minuten-Gespräch mit Andrea.</p>
-                    <button onclick="openFormModal('Rückrufbitte')" class="mt-auto w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                    <button onclick="openFormModal('Rückrufbitte')" class="mt-auto w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-300 text-center">
                         Rückruf anfordern
                     </button>
                 </div>
                  <!-- Option 4: Unverbindlicher Kontakt -->
                 <div class="flex flex-col border-2 border-gray-200 p-8 rounded-lg text-center hover:shadow-lg transition-shadow">
-                    <i class="fas fa-question-circle text-6xl text-gray-500 mb-4"></i>
+                    <div class="flex justify-center mb-4"><i class="fas fa-question-circle text-6xl text-gray-500"></i></div>
                     <h3 class="text-2xl font-bold text-primary-dark-green mb-2">Du hast eine Frage?</h3>
                     <p class="text-gray-700 flex-grow mb-6">Du bist noch unsicher? Kein Problem! Stell uns deine Frage, ganz ohne Bewerbung.</p>
-                    <button onclick="openFormModal('Frage')" class="mt-auto w-full bg-gray-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+                    <button onclick="openFormModal('Frage')" class="mt-auto w-full bg-gray-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors duration-300 text-center">
                         Frage stellen
                     </button>
                 </div>
@@ -475,5 +480,4 @@
     </script>
 </body>
 </html>
-
 
