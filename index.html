@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deine neue Physio-Heimat | Praxis Beweglich</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles & Farben inspiriert von beweglich.org und dem Foto */
+        :root {
+            --primary-turquoise: #00A99D; /* Das leuchtende Türkis aus dem Foto */
+            --primary-dark-green: #004B4B; /* Das ursprüngliche dunkle Grün */
+            --accent-orange: #F2994A;
+            --background-light: #FDFBF8;
+            --text-dark: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom Classes für Tailwind */
+        .bg-primary-turquoise { background-color: var(--primary-turquoise); }
+        .text-primary-turquoise { color: var(--primary-turquoise); }
+        .border-primary-turquoise { border-color: var(--primary-turquoise); }
+        .ring-primary-turquoise { --tw-ring-color: var(--primary-turquoise); }
+        .bg-primary-dark-green { background-color: var(--primary-dark-green); }
+        .text-primary-dark-green { color: var(--primary-dark-green); }
+        
+        /* Animationen */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Interaktiver Quiz Stil */
+        .quiz-step { display: none; }
+        .quiz-step.active { display: block; }
+        .quiz-option { transition: all 0.2s ease-in-out; }
+        .quiz-option:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Verhindert Layout-Sprünge beim Laden von Animationen */
+        .invisible-on-load { opacity: 0; }
+        
+        /* Modal Styles */
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- HERO SECTION -->
+    <section class="relative text-white min-h-[70vh] md:min-h-[80vh] flex items-center">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <img src="header_beweglich.jpg" alt="Team der Praxis Beweglich in Aktion" class="absolute inset-0 w-full h-full object-cover">
+        <div class="relative container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Deine neue Physio-Heimat.</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">Wo Wertschätzung, flexible Arbeitszeiten und ein echtes Team zu Hause sind.</p>
+            <a href="#application-start" class="mt-8 inline-block bg-primary-turquoise text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:bg-teal-600 transition-colors duration-300">
+                Jetzt in 60 Sekunden bewerben
+            </a>
+        </div>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section id="benefits" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary-dark-green mb-2">Mehr als nur ein Job.</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Wir glauben, dass zufriedene Therapeuten die besten Therapeuten sind. Deshalb bieten wir dir mehr.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                <!-- Benefit Card 1: Gehalt -->
+                <div class="benefit-card relative bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openBenefitModal('gehalt')">
+                    <div class="absolute top-4 right-4 text-primary-turquoise opacity-50"><i class="fas fa-info-circle"></i></div>
+                    <div class="flex justify-center mb-4"><i class="fas fa-euro-sign text-4xl text-primary-turquoise"></i></div>
+                    <h3 class="text-xl font-bold text-primary-dark-green mb-2 text-center">Faire Vergütung</h3>
+                    <p class="text-gray-700 text-center">Starte mit <strong>3.600 €</strong> Grundgehalt (VZ) plus <strong>150 €</strong> pro Zertifikat. Dazu gibt's Urlaubsgeld und mehr.</p>
+                </div>
+                <!-- Benefit Card 2: Flexibilität -->
+                <div class="benefit-card relative bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openBenefitModal('flexibilitaet')">
+                    <div class="absolute top-4 right-4 text-primary-turquoise opacity-50"><i class="fas fa-info-circle"></i></div>
+                    <div class="flex justify-center mb-4"><i class="fas fa-clock text-4xl text-primary-turquoise"></i></div>
+                    <h3 class="text-xl font-bold text-primary-dark-green mb-2 text-center">Dein Leben, dein Plan</h3>
+                    <p class="text-gray-700 text-center">Arbeitszeiten nach Wunsch (25-38h), keine Wochenenddienste und die Möglichkeit, deine Doku flexibel zu erledigen.</p>
+                </div>
+                <!-- Benefit Card 3: Team -->
+                <div class="benefit-card relative bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openBenefitModal('team')">
+                    <div class="absolute top-4 right-4 text-primary-turquoise opacity-50"><i class="fas fa-info-circle"></i></div>
+                    <div class="flex justify-center mb-4"><i class="fas fa-users text-4xl text-primary-turquoise"></i></div>
+                    <h3 class="text-xl font-bold text-primary-dark-green mb-2 text-center">Ein Team, das zusammenhält</h3>
+                    <p class="text-gray-700 text-center">Wir sind ein stabiles, herzliches Team. Eine 4-wöchige Einarbeitung sorgt für deinen perfekten Start bei uns.</p>
+                </div>
+                 <!-- Benefit Card 4: Weiterentwicklung -->
+                <div class="benefit-card relative bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openBenefitModal('entwicklung')">
+                    <div class="absolute top-4 right-4 text-primary-turquoise opacity-50"><i class="fas fa-info-circle"></i></div>
+                    <div class="flex justify-center mb-4"><i class="fas fa-graduation-cap text-4xl text-primary-turquoise"></i></div>
+                    <h3 class="text-xl font-bold text-primary-dark-green mb-2 text-center">Wir fördern dich</h3>
+                    <p class="text-gray-700 text-center">Bei uns bekommst du 5 Fortbildungstage pro Jahr und wir übernehmen die Kosten für wichtige Weiterbildungen.</p>
+                </div>
+                 <!-- Benefit Card 5: Fokus -->
+                <div class="benefit-card relative bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openBenefitModal('fokus')">
+                    <div class="absolute top-4 right-4 text-primary-turquoise opacity-50"><i class="fas fa-info-circle"></i></div>
+                    <div class="flex justify-center mb-4"><i class="fas fa-bullseye text-4xl text-primary-turquoise"></i></div>
+                    <h3 class="text-xl font-bold text-primary-dark-green mb-2 text-center">Fokus auf deine Patienten</h3>
+                    <p class="text-gray-700 text-center">Kein Rezeptions- oder Telefondienst! Dank unseres Orga-Teams kannst du dich zu 100% auf das konzentrieren, was du liebst.</p>
+                </div>
+                 <!-- Benefit Card 6: Extras -->
+                <div class="benefit-card relative bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openBenefitModal('extras')">
+                    <div class="absolute top-4 right-4 text-primary-turquoise opacity-50"><i class="fas fa-info-circle"></i></div>
+                    <div class="flex justify-center mb-4"><i class="fas fa-gift text-4xl text-primary-turquoise"></i></div>
+                    <h3 class="text-xl font-bold text-primary-dark-green mb-2 text-center">Starke Benefits</h3>
+                    <p class="text-gray-700 text-center">Profitiere von einer bAV mit 100€ Zuschuss, der Möglichkeit auf ein JobRad und weiteren Extras, die den Unterschied machen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRE-QUALIFICATION QUIZ SECTION -->
+    <section id="application-start" class="py-16 md:py-24">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary-dark-green mb-4">Passt du zu uns? Finden wir es heraus!</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Beantworte 3 kurze Fragen, um zu sehen, ob wir ein gutes Match sind.</p>
+
+            <div id="quiz-container" class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+                <!-- Step 1: Grundvoraussetzung -->
+                <div id="step1" class="quiz-step active">
+                    <h3 class="text-2xl font-semibold mb-6">Frage 1/3</h3>
+                    <p class="text-xl mb-8">Besitzt du eine in Deutschland staatlich anerkannte Ausbildung als Physiotherapeut:in?</p>
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button onclick="handleQuizAnswer('step1', true)" class="quiz-option w-full md:w-auto bg-primary-dark-green text-white font-bold px-12 py-4 rounded-lg">Ja, natürlich!</button>
+                        <button onclick="handleQuizAnswer('step1', false)" class="quiz-option w-full md:w-auto bg-gray-200 text-gray-800 font-bold px-12 py-4 rounded-lg">Leider nein</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Zertifikate -->
+                <div id="step2" class="quiz-step">
+                     <h3 class="text-2xl font-semibold mb-6">Frage 2/3</h3>
+                    <p class="text-xl mb-8">Welche dieser Zertifikate bringst du schon mit?</p>
+                    <div class="space-y-4 text-left mb-8 max-w-md mx-auto">
+                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" name="certificate" value="MT" class="h-6 w-6 text-primary-turquoise rounded ring-offset-white focus:ring-2 focus:ring-primary-turquoise">
+                            <span class="ml-4 text-lg">Manuelle Therapie (MT)</span>
+                        </label>
+                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" name="certificate" value="Bobath" class="h-6 w-6 text-primary-turquoise rounded ring-offset-white focus:ring-2 focus:ring-primary-turquoise">
+                            <span class="ml-4 text-lg">Bobath</span>
+                        </label>
+                         <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" name="certificate" value="None" class="h-6 w-6 text-primary-turquoise rounded ring-offset-white focus:ring-2 focus:ring-primary-turquoise">
+                            <span class="ml-4 text-lg">Keine davon, aber ich bin lernbereit!</span>
+                        </label>
+                    </div>
+                    <button onclick="handleQuizAnswer('step2', true)" class="quiz-option bg-primary-dark-green text-white font-bold px-12 py-4 rounded-lg">Weiter</button>
+                </div>
+                
+                <!-- Step 3: Verfügbarkeit -->
+                <div id="step3" class="quiz-step">
+                    <h3 class="text-2xl font-semibold mb-6">Frage 3/3</h3>
+                    <p class="text-xl mb-8">Ab wann könntest du frühestens bei uns starten?</p>
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button onclick="handleQuizAnswer('step3', true)" class="quiz-option w-full md:w-auto bg-gray-100 text-gray-800 font-semibold px-8 py-4 rounded-lg border border-gray-200">So bald wie möglich</button>
+                        <button onclick="handleQuizAnswer('step3', true)" class="quiz-option w-full md:w-auto bg-gray-100 text-gray-800 font-semibold px-8 py-4 rounded-lg border border-gray-200">In 1-2 Monaten</button>
+                        <button onclick="handleQuizAnswer('step3', true)" class="quiz-option w-full md:w-auto bg-gray-100 text-gray-800 font-semibold px-8 py-4 rounded-lg border border-gray-200">Später</button>
+                    </div>
+                </div>
+
+                <!-- Failure Message -->
+                <div id="failure-message" class="quiz-step">
+                    <p class="text-xl mb-4">Vielen Dank für deine Ehrlichkeit!</p>
+                    <p class="text-gray-600">Die staatliche Anerkennung ist für diese Position eine zwingende Voraussetzung. Wir wünschen dir für deinen weiteren Weg alles Gute!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- APPLICATION OPTIONS SECTION -->
+    <section id="application-options" class="hidden py-16 md:py-24 bg-white invisible-on-load">
+         <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary-dark-green mb-4">Perfekt! Das klingt nach einem Match.</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Wähle jetzt den Weg, der am besten zu dir passt. Wir freuen uns auf dich!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Option 1: WhatsApp -->
+                <div class="flex flex-col border-2 border-gray-200 p-8 rounded-lg text-center hover:shadow-lg transition-shadow">
+                    <i class="fab fa-whatsapp text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-primary-dark-green mb-2">Der schnelle Weg</h3>
+                    <p class="text-gray-700 flex-grow mb-6">Schreib uns einfach per WhatsApp. Kein Anschreiben, kein Stress.</p>
+                    <a href="https://wa.me/4915752065959?text=Hallo%20Praxis%20Beweglich,%20ich%20interessiere%20mich%20f%C3%BCr%20die%20Stelle%20als%20Physiotherapeut:in." target="_blank" class="mt-auto w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300">
+                        Jetzt per WhatsApp starten
+                    </a>
+                </div>
+                <!-- Option 2: Klassisch -->
+                <div class="flex flex-col border-2 border-primary-turquoise p-8 rounded-lg text-center bg-primary-dark-green text-white shadow-2xl transform md:scale-105">
+                    <i class="fas fa-paper-plane text-6xl text-primary-turquoise mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Der klassische Weg</h3>
+                    <p class="flex-grow mb-6">Fülle unser kurzes Kontaktformular aus. Wir melden uns dann umgehend bei dir.</p>
+                    <button onclick="openFormModal('Bewerbung')" class="mt-auto w-full bg-primary-turquoise text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-600 transition-colors duration-300">
+                        Kurzbewerbung starten
+                    </button>
+                </div>
+                <!-- Option 3: Persönlich -->
+                <div class="flex flex-col border-2 border-gray-200 p-8 rounded-lg text-center hover:shadow-lg transition-shadow">
+                    <i class="fas fa-phone-volume text-6xl text-blue-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-primary-dark-green mb-2">Der persönliche Weg</h3>
+                    <p class="text-gray-700 flex-grow mb-6">Bitte um einen Rückruf für ein unverbindliches 15-Minuten-Gespräch mit Andrea.</p>
+                    <button onclick="openFormModal('Rückrufbitte')" class="mt-auto w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                        Rückruf anfordern
+                    </button>
+                </div>
+                 <!-- Option 4: Unverbindlicher Kontakt -->
+                <div class="flex flex-col border-2 border-gray-200 p-8 rounded-lg text-center hover:shadow-lg transition-shadow">
+                    <i class="fas fa-question-circle text-6xl text-gray-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-primary-dark-green mb-2">Du hast eine Frage?</h3>
+                    <p class="text-gray-700 flex-grow mb-6">Du bist noch unsicher? Kein Problem! Stell uns deine Frage, ganz ohne Bewerbung.</p>
+                    <button onclick="openFormModal('Frage')" class="mt-auto w-full bg-gray-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+                        Frage stellen
+                    </button>
+                </div>
+            </div>
+         </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="bg-primary-dark-green text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-bold mb-2">Praxis Beweglich</p>
+            <p>Büchenbacher Anlage 27a, 91056 Erlangen</p>
+            <div class="mt-6">
+                <a href="https://www.beweglich.org/impressum/" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white mx-2">Impressum</a>
+                <span class="text-gray-500">|</span>
+                <a href="https://www.beweglich.org/datenschutz/" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white mx-2">Datenschutz</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BENEFIT MODAL -->
+    <div id="benefit-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="modal-backdrop fixed inset-0 bg-black bg-opacity-50" onclick="closeBenefitModal()"></div>
+        <div class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-lg mx-auto p-8 relative transform scale-95">
+            <button onclick="closeBenefitModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl">&times;</button>
+            <div class="flex justify-center mb-4"><i id="modal-icon" class="text-5xl text-primary-turquoise"></i></div>
+            <h3 id="modal-title" class="text-2xl font-bold text-center text-primary-dark-green mb-4"></h3>
+            <p id="modal-text" class="text-gray-700 text-center"></p>
+        </div>
+    </div>
+    
+    <!-- FORM MODAL -->
+    <div id="form-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="modal-backdrop fixed inset-0 bg-black bg-opacity-50" onclick="closeFormModal()"></div>
+        <div class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-lg mx-auto p-8 relative transform scale-95">
+            <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl">&times;</button>
+            <h3 id="form-modal-title" class="text-2xl font-bold text-center text-primary-dark-green mb-6"></h3>
+            <form id="contact-form" action="https://formspree.io/f/mzzjaddd" method="POST">
+                <input type="hidden" id="form-subject" name="_subject" value="">
+                <div id="name-field" class="mb-4">
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Dein Name</label>
+                    <input type="text" id="name" name="Name" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ring-primary-turquoise">
+                </div>
+                <div id="email-field" class="mb-4">
+                    <label for="email" class="block text-gray-700 font-bold mb-2">Deine E-Mail</label>
+                    <input type="email" id="email" name="Email" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ring-primary-turquoise">
+                </div>
+                <div id="phone-field" class="mb-6">
+                    <label for="phone" class="block text-gray-700 font-bold mb-2">Deine Telefonnummer</label>
+                    <input type="tel" id="phone" name="Telefon" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ring-primary-turquoise">
+                </div>
+                <div id="question-field" class="hidden mb-6">
+                     <label for="question" class="block text-gray-700 font-bold mb-2">Deine Frage</label>
+                     <textarea id="question" name="Frage" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ring-primary-turquoise" rows="4"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-primary-dark-green text-white font-bold py-4 px-6 rounded-lg hover:bg-teal-800 transition-colors duration-300">
+                    Anfrage absenden
+                </button>
+            </form>
+            <div id="form-thank-you" class="hidden text-center mt-8 p-6 bg-green-100 text-green-800 rounded-lg">
+                <p class="font-bold text-xl">Vielen Dank! Wir haben deine Anfrage erhalten und melden uns in Kürze bei dir.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- BENEFIT MODAL DATA & LOGIC ---
+        const benefitDetails = {
+            gehalt: {
+                icon: 'fas fa-euro-sign',
+                title: 'Eine Vergütung, die dich wertschätzt',
+                text: 'Wir wissen, was du leistest. Deshalb ist ein faires Gehalt für uns die absolute Grundlage. Neben dem starken Grundgehalt und den Zulagen für deine Qualifikationen honorieren wir den gemeinsamen Erfolg mit Urlaubsgeld und einer jährlichen Prämie. Bei uns soll sich deine Arbeit wirklich lohnen.'
+            },
+            flexibilitaet: {
+                icon: 'fas fa-clock',
+                title: 'Arbeit, die sich deinem Leben anpasst',
+                text: 'Das Leben ist nicht immer planbar – dein Job sollte es so gut wie möglich sein. Wir finden gemeinsam ein Arbeitszeitmodell (25-38h), das zu deiner aktuellen Lebensphase passt. Keine geteilten Dienste, keine Wochenendarbeit und die Freiheit, deine Doku auch mal von zu Hause zu erledigen, geben dir den Freiraum, den du brauchst.'
+            },
+            team: {
+                icon: 'fas fa-users',
+                title: 'Ankommen in einer zweiten Familie',
+                text: 'Das Wichtigste an einem Job ist das Gefühl, dazuzugehören. Unser Team ist über Jahre gewachsen, extrem stabil und vor allem: herzlich. Wir unterstützen uns gegenseitig, teilen unser Wissen (und unser Essen in den Pausen) und sorgen mit einer 4-wöchigen, strukturierten Einarbeitung dafür, dass du dich vom ersten Tag an wohlfühlst.'
+            },
+            entwicklung: {
+                icon: 'fas fa-graduation-cap',
+                title: 'Stillstand ist nicht unser Ding',
+                text: 'Du möchtest dich fachlich weiterentwickeln? Wir auch! Deshalb investieren wir in dich. Mit 5 festen Fortbildungstagen pro Jahr und der Übernahme von Kursgebühren für relevante Zertifikate (wie MT oder Bobath) sorgen wir dafür, dass du immer auf dem neuesten Stand bleibst und deine persönlichen Ziele erreichst.'
+            },
+            fokus: {
+                icon: 'fas fa-bullseye',
+                title: 'Deine Zeit für deine Patienten',
+                text: 'Klingelnde Telefone und Terminstress an der Rezeption? Nicht für dich! Unser engagiertes Organisationsteam hält dir den Rücken frei, damit du deine ganze Energie und Konzentration dem widmen kannst, was du am besten kannst und liebst: die Arbeit mit deinen Patientinnen und Patienten.'
+            },
+            extras: {
+                icon: 'fas fa-gift',
+                title: 'Die kleinen Dinge, die den Unterschied machen',
+                text: 'Ein guter Job ist mehr als nur Gehalt und Urlaub. Mit einem Zuschuss von 100€ zur betrieblichen Altersvorsorge denken wir an deine Zukunft. Mit dem JobRad unterstützen wir deine Gesundheit und die Umwelt. Und mit gemeinsamen Betriebsausflügen und Feiern stärken wir das, was uns am wichtigsten ist: unser Miteinander.'
+            }
+        };
+
+        const benefitModal = document.getElementById('benefit-modal');
+        function openBenefitModal(benefitKey) {
+            const details = benefitDetails[benefitKey];
+            document.getElementById('modal-icon').className = `text-5xl text-primary-turquoise ${details.icon}`;
+            document.getElementById('modal-title').innerText = details.title;
+            document.getElementById('modal-text').innerText = details.text;
+            benefitModal.classList.remove('hidden');
+            setTimeout(() => {
+                benefitModal.querySelector('.modal-backdrop').classList.remove('opacity-0');
+                benefitModal.querySelector('.modal-content').classList.remove('scale-95');
+            }, 10);
+        }
+        function closeBenefitModal() {
+            benefitModal.querySelector('.modal-backdrop').classList.add('opacity-0');
+            benefitModal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => benefitModal.classList.add('hidden'), 300);
+        }
+
+        // --- INTERACTIVE QUIZ LOGIC ---
+        function handleQuizAnswer(step, isSuccess) {
+            const currentStep = document.getElementById(step);
+            
+            if (step === 'step1') {
+                const nextStep = isSuccess ? document.getElementById('step2') : document.getElementById('failure-message');
+                currentStep.classList.remove('active');
+                nextStep.classList.add('active');
+            } else if (step === 'step2') {
+                const nextStep = document.getElementById('step3');
+                currentStep.classList.remove('active');
+                nextStep.classList.add('active');
+            } else if (step === 'step3') {
+                document.getElementById('quiz-container').classList.add('hidden');
+                const applicationSection = document.getElementById('application-options');
+                applicationSection.classList.remove('hidden');
+                setTimeout(() => {
+                    applicationSection.classList.add('fade-in');
+                    applicationSection.classList.remove('invisible-on-load');
+                    applicationSection.scrollIntoView({ behavior: 'smooth' });
+                }, 10);
+            }
+        }
+        
+        // --- FORM MODAL LOGIC ---
+        const formModal = document.getElementById('form-modal');
+        const formModalTitle = document.getElementById('form-modal-title');
+        const formSubject = document.getElementById('form-subject');
+        const contactForm = document.getElementById('contact-form');
+        const formThankYou = document.getElementById('form-thank-you');
+        
+        const nameField = document.getElementById('name-field');
+        const emailField = document.getElementById('email-field');
+        const phoneField = document.getElementById('phone-field');
+        const questionField = document.getElementById('question-field');
+        const questionTextarea = document.getElementById('question');
+
+        function openFormModal(type) {
+            contactForm.reset();
+            contactForm.classList.remove('hidden');
+            formThankYou.classList.add('hidden');
+
+            // Reset field visibility and requirements
+            nameField.style.display = 'block';
+            emailField.style.display = 'block';
+            phoneField.style.display = 'block';
+            questionField.style.display = 'none';
+            
+            document.getElementById('name').required = true;
+            document.getElementById('email').required = true;
+            document.getElementById('phone').required = true;
+            questionTextarea.required = false;
+
+            if (type === 'Bewerbung') {
+                formModalTitle.innerText = 'Kurzbewerbung';
+                formSubject.value = 'Neue Kurzbewerbung von der Landing Page';
+            } else if (type === 'Rückrufbitte') {
+                formModalTitle.innerText = 'Rückruf für ein Kennenlerngespräch anfordern';
+                formSubject.value = 'Rückrufbitte von der Landing Page';
+            } else if (type === 'Frage') {
+                formModalTitle.innerText = 'Stell uns deine Frage';
+                formSubject.value = 'Frage von der Landing Page';
+                questionField.style.display = 'block';
+                questionTextarea.required = true;
+                phoneField.style.display = 'none'; // Phone not mandatory for a simple question
+                document.getElementById('phone').required = false;
+            }
+
+            formModal.classList.remove('hidden');
+            setTimeout(() => {
+                formModal.querySelector('.modal-backdrop').classList.remove('opacity-0');
+                formModal.querySelector('.modal-content').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeFormModal() {
+            formModal.querySelector('.modal-backdrop').classList.add('opacity-0');
+            formModal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => formModal.classList.add('hidden'), 300);
+        }
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    contactForm.classList.add('hidden');
+                    formThankYou.classList.remove('hidden');
+                } else {
+                    alert('Oops! Da ist etwas schiefgelaufen. Bitte versuche es später erneut.');
+                }
+            }).catch(error => {
+                alert('Ein Netzwerkfehler ist aufgetreten. Bitte überprüfe deine Verbindung.');
+            });
+        });
+
+
+        // --- Intersection Observer for Fade-in Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    entry.target.classList.remove('invisible-on-load');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('#benefits, #application-start').forEach(section => {
+             section.classList.add('invisible-on-load');
+             observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
+
+
